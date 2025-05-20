@@ -33,7 +33,7 @@ public class Contact {
 
 	public void setEmail(String email) throws BusinessLogicException {
 
-		if (email == null && email.trim().isEmpty())
+		if (email == null || email.trim().isEmpty())
 			throw new EmailRequiredException();
 
 		RegexUtil.validateEmail(email);
