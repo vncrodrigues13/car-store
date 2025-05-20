@@ -1,6 +1,8 @@
 package com.vncrodrigues13.carstore.models;
 
-import org.springframework.data.mongodb.core.mapping.DBRef;
+import com.vncrodrigues13.carstore.exceptions.BusinessLogicException;
+import com.vncrodrigues13.carstore.exceptions.EmptyFirstNameException;
+import com.vncrodrigues13.carstore.exceptions.EmptyLastNameException;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
@@ -8,80 +10,83 @@ import java.util.Date;
 @Document("user")
 public class User {
 
-	private int userId;
-	@DBRef
-	private Contact contact;
-	private String firstName;
-	private String lastName;
-	private Date birthDate;
-	private String governmentId;
+    private int userId;
+    private Contact contact;
+    private String firstName;
+    private String lastName;
+    private Date birthDate;
+    private String governmentId;
 
-	public User(String firstName, String lastName, Contact contact, Date birthDate, String governmentId) {
-		super();
-		setFirstName(firstName);
-		setLastName(lastName);
-		setContact(contact);
-		setBirthDate(birthDate);
-		setGovernmentId(governmentId);
-	}
+    public User(String firstName, String lastName, Contact contact, Date birthDate, String governmentId)
+            throws BusinessLogicException {
+        super();
+        setFirstName(firstName);
+        setLastName(lastName);
+        setContact(contact);
+        setBirthDate(birthDate);
+        setGovernmentId(governmentId);
+    }
 
-	public int getUserId() {
+    public int getUserId() {
 
-		return userId;
-	}
+        return userId;
+    }
 
-	public void setUserId(int userId) {
+    public void setUserId(int userId) {
 
-		this.userId = userId;
-	}
+        this.userId = userId;
+    }
 
-	public Contact getContact() {
+    public Contact getContact() {
 
-		return contact;
-	}
+        return contact;
+    }
 
-	public void setContact(Contact contact) {
+    public void setContact(Contact contact) {
 
-		this.contact = contact;
-	}
+        this.contact = contact;
+    }
 
-	public String getFirstName() {
+    public String getFirstName() {
 
-		return firstName;
-	}
+        return firstName;
+    }
 
-	public void setFirstName(String firstName) {
+    public void setFirstName(String firstName) throws EmptyFirstNameException {
+        if (firstName == null || firstName.trim().isEmpty())
+            throw new EmptyFirstNameException();
+        this.firstName = firstName;
+    }
 
-		this.firstName = firstName;
-	}
+    public String getLastName() throws EmptyLastNameException {
 
-	public String getLastName() {
+        return lastName;
+    }
 
-		return lastName;
-	}
+    public void setLastName(String lastName) throws EmptyLastNameException {
+        if (lastName == null || lastName.trim().isEmpty())
+            throw new EmptyLastNameException();
 
-	public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 
-		this.lastName = lastName;
-	}
+    public Date getBirthDate() {
 
-	public Date getBirthDate() {
+        return birthDate;
+    }
 
-		return birthDate;
-	}
+    public void setBirthDate(Date birthDate) {
 
-	public void setBirthDate(Date birthDate) {
+        this.birthDate = birthDate;
+    }
 
-		this.birthDate = birthDate;
-	}
+    public String getGovernmentId() {
 
-	public String getGovernmentId() {
+        return governmentId;
+    }
 
-		return governmentId;
-	}
+    public void setGovernmentId(String governmentId) {
 
-	public void setGovernmentId(String governmentId) {
-
-		this.governmentId = governmentId;
-	}
+        this.governmentId = governmentId;
+    }
 }
